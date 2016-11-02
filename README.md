@@ -16,6 +16,7 @@
     jet_client = Jet.client(merchant_id: "your_merch_id", api_user: "your_api_user", secret: "your_secret")
 
 ## Products
+[Jet Products API](https://developer.jet.com/docs/merchant-sku)
 
     # Product Attributes
     attrs = {product_title: 'My Product',
@@ -30,7 +31,8 @@
               multipack_quantity: 1,
             }
 
-    # Call products.update_product to add a new product or update an existing one. If the SKU is new, a new product will be created.
+    # Call products.update_product to add a new product or update an existing one.
+    # If the SKU is new, a new product will be created.
 
     response = jet_client.products.update_product('MyNewSku123', attrs)
 
@@ -48,16 +50,43 @@
                                                     ])
 
 ## Retrieve Orders
+[Jet Orders API](https://developer.jet.com/docs/order-status)
 
-    # get_orders defaults to 'ready' status
-    jet_client.orders.get_orders
+get_orders defaults to 'ready' status
+    response = jet_client.orders.get_orders
+    ready_orders = response['order_urls']
 
-    # Retrieve acknowledged orders
-    jet_client.orders.get_orders(:acknowledged)
+Retrieve acknowledged orders
+    response = jet_client.orders.get_orders(:acknowledged)
+    acknowledged_orders = response['order_urls']
 
-    # Other status options are:
+Other status options are:
     :created
     :ready
     :acknowledged
     :inprogress
     :complete
+
+Retrieve a specific order
+    order_url = ready_orders.first
+    order = jet_client.orders.get_order(order_url)
+
+## Acknowledge an Order
+[Jet Acknowledge Order API](https://developer.jet.com/docs/acknowledge-order)
+
+    jet_order_id = order['merchant_order_id']
+    response = jet_client.orders.acknowledge_order(jet_order_id,
+                          acknowledgement_status: 'accepted',
+                          alt_order_id: '232145', #optional
+                          order_items: [
+                              { order_item_acknowledgement_status: 'fulfillable',
+                                order_item_id: 'b81f073b18f548b892f6d4497af16297',
+                                alt_order_item_id: '554443322' # optional
+                              }
+                            ]
+                          )
+
+
+
+
+

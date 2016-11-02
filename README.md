@@ -18,7 +18,8 @@
 ## Products
 [Jet Products API](https://developer.jet.com/docs/merchant-sku)
 
-    # Product Attributes
+Product Attributes
+
     attrs = {product_title: 'My Product',
               ASIN:           '12345ABCDE',
               brand:          "My Product's Brand",
@@ -31,18 +32,21 @@
               multipack_quantity: 1,
             }
 
-    # Call products.update_product to add a new product or update an existing one.
-    # If the SKU is new, a new product will be created.
+Call products.update_product to add a new product or update an existing one.
+If the SKU is new, a new product will be created.
 
     response = jet_client.products.update_product('MyNewSku123', attrs)
 
-    # Retrieve an existing product
+Retrieve an existing product
+
     product = jet_client.products.get_product('MyNewSku123')
 
-    # Set the price on a product
+Set the price on a product
+
     response = jet_client.products.update_price('MyNewSku123', price: 30.95)
 
-    # Update the inventory
+Update the inventory
+
     response = jet_client.products.update_inventory('MyNewSku123',
                                     fulfillment_nodes: [
                                                     {fulfillment_node_id: 'node1234', quantity: 100},
@@ -53,14 +57,17 @@
 [Jet Orders API](https://developer.jet.com/docs/order-status)
 
 get_orders defaults to 'ready' status
+
     response = jet_client.orders.get_orders
     ready_orders = response['order_urls']
 
 Retrieve acknowledged orders
+
     response = jet_client.orders.get_orders(:acknowledged)
     acknowledged_orders = response['order_urls']
 
 Other status options are:
+
     :created
     :ready
     :acknowledged
@@ -68,6 +75,7 @@ Other status options are:
     :complete
 
 Retrieve a specific order
+
     order_url = ready_orders.first
     order = jet_client.orders.get_order(order_url)
 

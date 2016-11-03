@@ -113,6 +113,7 @@ response = jet_client.orders.acknowledge_order(jet_order_id,
                         ]
                       )
 ```
+
 Mark Order as shipped
 [Jet Ship Order API](https://developer.jet.com/docs/ship-order)
 
@@ -139,6 +140,7 @@ response = jet_client.orders.ship_order(jet_order_id,
                         ]
                       )
 ```
+
 
 
 
